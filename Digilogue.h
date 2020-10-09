@@ -7,7 +7,7 @@ const int kNumPresets = 1;
 
 enum EParams
 {
-  kParamGain = 0,
+  kParamMainGain = 0,
   kParamNoteGlideTime,
   kParamAttack,
   kParamDecay,

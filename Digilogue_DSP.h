@@ -174,7 +174,7 @@ public:
       case kParamNoteGlideTime:
         mSynth.SetNoteGlideTime(value / 1000.);
         break;
-      case kParamGain:
+      case kParamMainGain:
         mParamsToSmooth[kModGainSmoother] = (T) value / 100.;
         break;
       case kParamSustain:
