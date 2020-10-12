@@ -5,6 +5,9 @@
 #include "ADSREnvelope.h"
 #include "Smoothers.h"
 #include "LFO.h"
+#include "VCO.h"
+#include "LowPassFilter.h"
+#include "Digilogue_LFO.h"
 
 using namespace iplug;
 
@@ -190,19 +193,19 @@ public:
         });
         break;
       }
-      case kParamLFODepth:
+      case kParamLFOTarget:
         mLFO.SetScalar(value / 100.);
         break;
-      case kParamLFORateTempo:
+      case kParamLFOInt:
         mLFO.SetQNScalarFromDivision(static_cast<int>(value));
         break;
-      case kParamLFORateHz:
+      case kParamLFORate:
         mLFO.SetFreqCPS(value);
         break;
-      case kParamLFORateMode:
+      case kParamLFOMod:
         mLFO.SetRateMode(value > 0.5);
         break;
-      case kParamLFOShape:
+      case kParamLFOWave:
         mLFO.SetShape(static_cast<int>(value));
         break;
       default:

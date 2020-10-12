@@ -2,29 +2,61 @@
 
 #include "IPlug_include_in_plug_hdr.h"
 #include "IControls.h"
+#include "Digilogue_DSP.h"
+
+#define VOICE_MODE_VALIST "Poly", "Duo", "Unison", "Mono", "Chord", "Delay", "Arp", "Sidechain"
 
 const int kNumPresets = 1;
 
 enum EParams
 {
   kParamMainGain = 0,
+  kParamMainTempo,
+  kParamMainOctave,
   kParamNoteGlideTime,
+  kParamVCO1Octave,
+  kParamVCO1Wave,
+  kParamVCO1Pitch,
+  kParamVCO1Shape,
+  kParamVCO2Octave,
+  kParamVCO2Wave,
+  kParamVCO2Pitch,
+  kParamVCO2Shape,
+  kParamVCO2ModDepth,
+  kParamVCO2PitchInt,
+  kParamVCO2Sync,
+  kParamVCO2Ring,
+  kParamMixerVCO1,
+  kParamMixerVCO2,
+  kParamMixerNoise,
+  kParamFilterCutoff,
+  kParamFilterRes,
+  kParamFilterEGInt,
+  kParamFilterPole,
+  kParamFilterKeyTrack,
+  kParamFilterVelocity,
+  kParamAmpAttack,
+  kParamAmpDecay,
+  kParamAmpSustain,
+  kParamAmpRelease,
   kParamAttack,
   kParamDecay,
   kParamSustain,
   kParamRelease,
-  kParamLFOShape,
+  kParamLFOWave,
+  kParamLFOMod,
   kParamLFORateHz,
   kParamLFORateTempo,
   kParamLFORateMode,
-  kParamLFODepth,
+  kParamLFOInt,
+  kParamLFOTarget,
+  kParamDelayCutoff,
+  kParamDelayTime,
+  kParamDelayFeedback,
+  kParamDelayEnable,
+  kParamVoiceMode,
   kNumParams
 };
-
-#if IPLUG_DSP
-// will use EParams in Digilogue_DSP.h
-#include "Digilogue_DSP.h"
-#endif
 
 enum EControlTags
 {
@@ -35,6 +67,19 @@ enum EControlTags
   kCtrlTagKeyboard,
   kCtrlTagBender,
   kNumCtrlTags
+};
+
+enum EVoiceModes
+{
+  kPoly,
+  kDuo,
+  kUnison,
+  kMono,
+  kChord,
+  kDelay,
+  kArp,
+  kSidechain,
+  kNumModes
 };
 
 using namespace iplug;

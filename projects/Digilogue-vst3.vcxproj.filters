@@ -403,6 +403,7 @@
       <Filter>IGraphics</Filter>
     </ClInclude>
     <ClInclude Include="..\Digilogue_DSP.h" />
+    <ClInclude Include="..\..\..\IPlug\Extras\Oscillator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">
