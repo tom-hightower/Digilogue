@@ -10,8 +10,8 @@
 
 #define VCO_SHAPE_VALIST "Triangle", "Square", "Sawtooth"
 
-
-class VCO : public IOscillator<>
+template<typename T = double>
+class VCO : public iplug::IOscillator<T>
 {
 public:
   enum EShape {

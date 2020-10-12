@@ -10,11 +10,11 @@ Digilogue::Digilogue(const InstanceInfo& info)
   GetParam(kParamMainOctave)    ->  InitInt("Octave", 4, 0, 7);
   GetParam(kParamNoteGlideTime) ->  InitMilliseconds("Note Glide Time", 0., 0.0, 30.);
   GetParam(kParamVCO1Octave)    ->  InitInt("VCO1 Octave", 4, 0, 7);
-  GetParam(kParamVCO1Wave)      ->  InitEnum("VCO1 Wave", VCO::kTriangle, {VCO_SHAPE_VALIST});
+  GetParam(kParamVCO1Wave)      ->  InitEnum("VCO1 Wave", VCO<>::kTriangle, {VCO_SHAPE_VALIST});
   GetParam(kParamVCO1Pitch)     ->  InitInt("VCO1 Pitch", 0, -1200, 1200, "c");
   GetParam(kParamVCO1Shape)     ->  InitInt("VCO1 Shape", 0, 0, 1023);
   GetParam(kParamVCO2Octave)    ->  InitInt("VCO2 Octave", 4, 0, 7);
-  GetParam(kParamVCO2Wave)      ->  InitEnum("VCO2 Wave", VCO::kTriangle, { VCO_SHAPE_VALIST });
+  GetParam(kParamVCO2Wave)      ->  InitEnum("VCO2 Wave", VCO<>::kTriangle, { VCO_SHAPE_VALIST });
   GetParam(kParamVCO2Pitch)     ->  InitInt("VCO2 Pitch", 0, -1200, 1200, "c");
   GetParam(kParamVCO2Shape)     ->  InitInt("VCO2 Shape", 0, 0, 1023);
   GetParam(kParamVCO2ModDepth)  ->  InitInt("Cross Mod Depth", 0, 0, 1023);
@@ -39,12 +39,12 @@ Digilogue::Digilogue(const InstanceInfo& info)
   GetParam(kParamSustain)       ->  InitDouble("Sustain", 50., 0., 100., 1, "%", IParam::kFlagsNone, "ADSR");
   GetParam(kParamRelease)       ->  InitDouble("Release", 10., 2., 1000., 0.1, "ms", IParam::kFlagsNone, "ADSR");
   GetParam(kParamLFOWave)       ->  InitEnum("LFO Shape", LFO<>::kTriangle, {LFO_SHAPE_VALIST});
-  GetParam(kParamLFOMod)        ->  InitEnum("LFO Sync", DigilogueLFO<double>::kOff, {LFO_MOD_VALIST});
+  GetParam(kParamLFOMod)        ->  InitEnum("LFO Sync", DigilogueLFO<>::kOff, {LFO_MOD_VALIST});
   GetParam(kParamLFORateHz)     ->  InitFrequency("LFO Rate", 1., 0.01, 40.);
   GetParam(kParamLFORateTempo)  ->  InitEnum("LFO Rate", LFO<>::k1, {LFO_TEMPODIV_VALIST});
   GetParam(kParamLFORateMode)   ->  InitBool("LFO BPM Sync", false);
   GetParam(kParamLFOInt)        ->  InitPercentage("LFO Intensity");
-  GetParam(kParamLFOTarget)     ->  InitEnum("LFO Target", DigilogueLFO<double>::kShape, {LFO_TARGET_VALIST});
+  GetParam(kParamLFOTarget)     ->  InitEnum("LFO Target", DigilogueLFO<>::kShape, {LFO_TARGET_VALIST});
   GetParam(kParamDelayCutoff)   ->  InitFrequency("High Pass Cutoff");
   GetParam(kParamDelayTime)     ->  InitInt("Delay Time", 0, 0, 1023);
   GetParam(kParamDelayFeedback) ->  InitPercentage("Delay Feedback");

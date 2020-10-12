@@ -7,7 +7,7 @@
 
 
 template<typename T = double>
-class DigilogueLFO : public LFO<T>
+class DigilogueLFO : public iplug::LFO<T>
 {
 public:
   enum EEGMod

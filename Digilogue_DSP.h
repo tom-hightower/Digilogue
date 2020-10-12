@@ -199,7 +199,7 @@ public:
       case kParamLFOInt:
         mLFO.SetQNScalarFromDivision(static_cast<int>(value));
         break;
-      case kParamLFORate:
+      case kParamLFORateHz:
         mLFO.SetFreqCPS(value);
         break;
       case kParamLFOMod:
