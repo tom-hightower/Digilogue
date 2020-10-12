@@ -66,43 +66,44 @@ Digilogue::Digilogue(const InstanceInfo& info)
     pGraphics->AttachPopupMenuControl();
 #endif
 
-    pGraphics->EnableLiveEdit(true);
+    //pGraphics->EnableLiveEdit(true);
     pGraphics->LoadFont("Roboto-Regular", ROBOTO_FN);
-    const IRECT b = pGraphics->GetBounds().GetPadded(-20.f);
-    const IRECT mainPanel = b.GetCentredInside(75.0f, 225.0f).GetHShifted(-460).GetVShifted(-150);
+    const IRECT b               = pGraphics->GetBounds().GetPadded(-20.f);
+    const float twoThirdsHeight = 2.0f / 3.0f * b.H();
+    const IRECT mainPanel       = b.GetCentredInside(75.0f, 225.0f).GetHShifted(-460).GetVShifted(-150);
     pGraphics->AttachControl(new IVKnobControl(mainPanel.GetCentredInside(75).GetVShifted(-75), kParamMainGain, "Gain"));
     pGraphics->AttachControl(new IVKnobControl(mainPanel.GetCentredInside(75), kParamNoteGlideTime, "Glide"));
-    const IRECT vcoPanel = b.GetCentredInside(300.0f, 2.0f / 3.0f * b.H()).GetHShifted(-385).GetVShifted(-64);
-    const IRECT mixerPanel = b.GetCentredInside(75.0f, 2.0f / 3.0f * b.H()).GetHShifted(-85).GetVShifted(-64);
-    const IRECT filterPanel = b.GetCentredInside(150.0f, 2.0f / 3.0f * b.H()).GetHShifted(-10).GetVShifted(-64);
-    const IRECT egLFOPanel = b.GetCentredInside(300.0f, 2.0f / 3.0f * b.H()).GetHShifted(140).GetVShifted(64);
-    const IRECT delayModePanel = b.GetCentredInside(225.0f, 2.0f / 3.0f * b.H()).GetHShifted(440).GetVShifted(-64);
+    const IRECT vcoPanel        = b.GetCentredInside(300.0f,twoThirdsHeight).GetHShifted(-385).GetVShifted(-64);
+    const IRECT mixerPanel      = b.GetCentredInside(75.0f, twoThirdsHeight).GetHShifted(-85).GetVShifted(-64);
+    const IRECT filterPanel     = b.GetCentredInside(150.0f,twoThirdsHeight).GetHShifted(-10).GetVShifted(-64);
+    const IRECT egLFOPanel      = b.GetCentredInside(300.0f,twoThirdsHeight).GetHShifted(140).GetVShifted(-100);
+    const IRECT delayModePanel  = b.GetCentredInside(225.0f,twoThirdsHeight).GetHShifted(440).GetVShifted(-64);
 
-    IRECT keyboardBounds = b.GetFromBottom(b.GetLengthOfShortestSide() / 3.0f);
-    IRECT wheelsBounds = keyboardBounds.ReduceFromLeft(100.f).GetPadded(-10.f);
+    IRECT keyboardBounds        = b.GetFromBottom(b.GetLengthOfShortestSide() / 3.0f);
+    IRECT wheelsBounds          = keyboardBounds.ReduceFromLeft(90.f).GetPadded(-10.f);
     pGraphics->AttachControl(new IVKeyboardControl(keyboardBounds), kCtrlTagKeyboard);
     pGraphics->AttachControl(new IWheelControl(wheelsBounds.FracRectHorizontal(0.5)), kCtrlTagBender);
     pGraphics->AttachControl(new IWheelControl(wheelsBounds.FracRectHorizontal(0.5, true), IMidiMsg::EControlChangeMsg::kModWheel));
 //    pGraphics->AttachControl(new IVMultiSliderControl<4>(b.GetGridCell(0, 2, 2).GetPadded(-30), "", DEFAULT_STYLE, kParamAttack, EDirection::Vertical, 0.f, 1.f));
-    const IRECT ampADSRPanel = egLFOPanel.GetGridCell(0, 0, 1, 4);
-    pGraphics->AttachControl(new IVKnobControl(ampADSRPanel.GetGridCell(0, 1, 4).GetMidHPadded(20.), kParamAmpAttack, "Attack"),   kNoTag, "AmpADSR");
-    pGraphics->AttachControl(new IVKnobControl(ampADSRPanel.GetGridCell(1, 1, 4).GetMidHPadded(20.), kParamAmpDecay,  "Decay"),    kNoTag, "AmpADSR");
-    pGraphics->AttachControl(new IVKnobControl(ampADSRPanel.GetGridCell(2, 1, 4).GetMidHPadded(20.), kParamAmpSustain, "Sustain"), kNoTag, "AmpADSR");
-    pGraphics->AttachControl(new IVKnobControl(ampADSRPanel.GetGridCell(3, 1, 4).GetMidHPadded(20.), kParamAmpRelease, "Release"), kNoTag, "AmpADSR");
+    const IRECT ampADSRPanel = egLFOPanel.GetCentredInside(300.0f, 225.0f).GetVShifted(-75);
+    pGraphics->AttachControl(new IVKnobControl(ampADSRPanel.GetCentredInside(75.0f).GetHShifted(-112.5f), kParamAmpAttack, "Attack"),   kNoTag, "AmpADSR");
+    pGraphics->AttachControl(new IVKnobControl(ampADSRPanel.GetCentredInside(75.0f).GetHShifted(-37.5f), kParamAmpDecay,  "Decay"),    kNoTag, "AmpADSR");
+    pGraphics->AttachControl(new IVKnobControl(ampADSRPanel.GetCentredInside(75.0f).GetHShifted(37.5f), kParamAmpSustain, "Sustain"), kNoTag, "AmpADSR");
+    pGraphics->AttachControl(new IVKnobControl(ampADSRPanel.GetCentredInside(75.0f).GetHShifted(112.5f), kParamAmpRelease, "Release"), kNoTag, "AmpADSR");
 
-    const IRECT adsrPanel = egLFOPanel.GetGridCell(0, 1, 1, 4);
-    pGraphics->AttachControl(new IVKnobControl(adsrPanel.GetGridCell(0, 1, 4).GetMidHPadded(20.), kParamAttack, "Attack"), kNoTag, "ADSR");
-    pGraphics->AttachControl(new IVKnobControl(adsrPanel.GetGridCell(1, 1, 4).GetMidHPadded(20.), kParamDecay, "Decay"), kNoTag, "ADSR");
-    pGraphics->AttachControl(new IVKnobControl(adsrPanel.GetGridCell(2, 1, 4).GetMidHPadded(20.), kParamSustain, "Sustain"), kNoTag, "ADSR");
-    pGraphics->AttachControl(new IVKnobControl(adsrPanel.GetGridCell(3, 1, 4).GetMidHPadded(20.), kParamRelease, "Release"), kNoTag, "ADSR");
+    const IRECT adsrPanel = egLFOPanel.GetCentredInside(300.0f, 225.0f);
+    pGraphics->AttachControl(new IVKnobControl(adsrPanel.GetCentredInside(75.0f).GetHShifted(-112.5f), kParamAttack, "Attack"), kNoTag, "ADSR");
+    pGraphics->AttachControl(new IVKnobControl(adsrPanel.GetCentredInside(75.0f).GetHShifted(-37.5f), kParamDecay, "Decay"), kNoTag, "ADSR");
+    pGraphics->AttachControl(new IVKnobControl(adsrPanel.GetCentredInside(75.0f).GetHShifted(37.5f), kParamSustain, "Sustain"), kNoTag, "ADSR");
+    pGraphics->AttachControl(new IVKnobControl(adsrPanel.GetCentredInside(75.0f).GetHShifted(112.5f), kParamRelease, "Release"), kNoTag, "ADSR");
 
     pGraphics->AttachControl(new IVLEDMeterControl<2>(vcoPanel.GetFromRight(100).GetPadded(-20)), kCtrlTagMeter);
 
-    const IRECT lfoPanel = egLFOPanel.GetGridCell(0, 2, 1, 5);
-    pGraphics->AttachControl(new IVKnobControl(lfoPanel.GetGridCell(0, 0, 2, 3).GetCentredInside(60), kParamLFORateHz, "Rate"), kNoTag, "LFO");
-    pGraphics->AttachControl(new IVKnobControl(lfoPanel.GetGridCell(0, 1, 2, 3).GetCentredInside(60), kParamLFOInt, "Rate"), kNoTag, "LFO")->DisablePrompt(false);
-    pGraphics->AttachControl(new IVKnobControl(lfoPanel.GetGridCell(0, 2, 2, 3).GetCentredInside(60), kParamLFOTarget, "Depth"), kNoTag, "LFO");
-    pGraphics->AttachControl(new IVKnobControl(lfoPanel.GetGridCell(0, 3, 2, 3).GetCentredInside(60), kParamLFOWave, "Shape"), kNoTag, "LFO")->DisablePrompt(false);
+    const IRECT lfoPanel = egLFOPanel.GetCentredInside(300.0f, 225.0f).GetVShifted(75);
+    pGraphics->AttachControl(new IVKnobControl(lfoPanel.GetCentredInside(75.0f).GetHShifted(-112.5f), kParamLFORateHz, "Rate"), kNoTag, "LFO");
+    pGraphics->AttachControl(new IVKnobControl(lfoPanel.GetCentredInside(75.0f).GetHShifted(-37.5f), kParamLFOInt, "Rate"), kNoTag, "LFO")->DisablePrompt(false);
+    pGraphics->AttachControl(new IVKnobControl(lfoPanel.GetCentredInside(75.0f).GetHShifted(37.5f), kParamLFOTarget, "Depth"), kNoTag, "LFO");
+    pGraphics->AttachControl(new IVKnobControl(lfoPanel.GetCentredInside(75.0f).GetHShifted(112.5f), kParamLFOWave, "Shape"), kNoTag, "LFO")->DisablePrompt(false);
     
     
     pGraphics->AttachControl(new IVButtonControl(keyboardBounds.GetFromTRHC(200, 30).GetTranslated(0, -30), SplashClickActionFunc,
